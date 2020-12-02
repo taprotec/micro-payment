@@ -13,7 +13,7 @@
 **Don't forget to add app type on every transaction, app can be either sandbox for development environment or openapi for production (live) enviroment.**
 
 ### MPESA Customer to Business Transaction (C2B)
-1. Sample request object
+1. **Sample request object**
 ```
 const client = {
     input_Amount: '0000',
@@ -25,13 +25,13 @@ const client = {
     app: 'sandbox'
 }
 ```
-2. Sending **c2b** transaction
+2. **Sending c2b request**
 ```
 setTimeout(async () => {
    console.log(await MPESA.c2b(client))
 }, 1000)
 ```
-3. Sample success response object
+3. **Sample success response object**
 ```
 {
   "output_ResponseCode": "INS-0",
@@ -42,7 +42,6 @@ setTimeout(async () => {
 }
 ```
 
-4. Failure response
+4. **Failure response**
 `returns false` and `log` the `error message` on the `console` 
-```
 **Customer to business transaction return a promise, so you have to await to get the results.** 
