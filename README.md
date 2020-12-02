@@ -1,16 +1,20 @@
 # MICRO PAYMENT
 
-Python version >= 3.6
 
-run pip install pycrypto
+### Requirements
+1. Make you've `python --version >= 3.6` on your machine or [download it here.](https://www.python.org/downloads/)
 
-NodeJS version >= 10
+2. Run `pip install pycrypto` to install `pycrypto` or [visit here.](https://pypi.org/project/pycrypto/)
 
-**NOTE: App can be either sandbox for development environment or openapi for production (live) enviroment.**
+3. Make sure you've `nodejs --v >= 10` on your machine or [download it here](https://nodejs.org/en/)
+
+
+**NOTE: Don't forget to add app type on every transaction, app can be either sandbox for development environment or openapi for production (live) enviroment.**
 
 ### MPESA Customer to Business Transaction (C2B)
 ```
-const client: c2b = {
+1. Sample request object
+const client = {
     input_Amount: '0000',
     input_CustomerMSISDN: '000000000001',
     input_PurchasedItemsDesc: 'Donation',
@@ -24,5 +28,16 @@ setTimeout(async () => {
    console.log(await MPESA.c2b(client))
 }, 1000)
 
+2. Sample success response object
+{
+  "output_ResponseCode": "INS-0",
+  "output_ResponseDesc": "Request processed successfully",
+  "output_TransactionID": "yzsRm4j8C2SK",
+  "output_ConversationID": "c0b077ab74574342abdb50a71d7b5117",
+  "output_ThirdPartyConversationID": "1e9b774d1da34af78412a498cbc28f5e"
+}
+
+3. Failure response
+ =  false and log the error message on the console 
 ```
 **Customer to business transaction return a promise, so you have to await to get the results.** 
