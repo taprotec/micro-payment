@@ -53,7 +53,7 @@ setTimeout(async () => {
 4. **Sample c2b failure response**
 `returns false` and `log` the `error message` on the `console`
  
-**Customer to business transaction return a promise, so you have to await to get the results.** 
+**Customer to business transaction `return` a `promise`, so you have to `await` to get the results.** 
 
 ### MPESA Business to Customer Transaction (B2C)
 1. **Sample b2c request object**
@@ -88,5 +88,5 @@ setTimeout(async () => {
 4. **Sample b2c failure response**
 `returns false` and `log` the `error message` on the `console`
  
-**Business to customer transaction return a promise, so you have to await to get the results.** 
+**Business to customer transaction `return` a `promise`, so you have to `await` to get the results.** 
 
