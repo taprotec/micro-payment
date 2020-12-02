@@ -20,7 +20,7 @@
 4. `MPESA.status()`
 5. `MPESA.reverse()`
 
-### MPESA Customer to Business Transaction (C2B)
+### Customer to Business Transaction (C2B)
 1. **Sample c2b request object**
 ```
 const client = {
@@ -55,7 +55,7 @@ setTimeout(async () => {
  
 **Customer to business transaction `return` a `promise`, so you have to `await` to get the results.** 
 
-### MPESA Business to Customer Transaction (B2C)
+### Business to Customer Transaction (B2C)
 1. **Sample b2c request object**
 ```
 const client = {
