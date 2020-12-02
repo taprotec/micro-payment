@@ -6,7 +6,7 @@
 
 2. `pip install pycrypto` to install `pycrypto` or [visit.](https://pypi.org/project/pycrypto/)
 
-3. `nodejs --v >= 10` on your machine or [download](https://nodejs.org/en/)
+3. `node -v >= 10` on your machine or [download](https://nodejs.org/en/)
 
 
 ##### NOTE

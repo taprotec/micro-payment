@@ -10,7 +10,7 @@
   },
   "keywords": [
     "mpesa",
-    "mpesa-apijavascript-mpesa"
+    "mpesa-api javascript-mpesa"
   ],
   "author": "taprotec",
   "license": "ISC",
@@ -26,6 +26,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taprotec/mpesa-micro-payment.git"
+    "url": "git+https://github.com/taprotec/micro-payment.git"
   }
 }
