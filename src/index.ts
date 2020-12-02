@@ -53,7 +53,7 @@ const transact: transact = {
     session: market + '/getSession/'
 }
 
-export default class mpesa {
+class mpesa {
 
     // private key encrption 
     protected encrypt(privateKey: any) {
@@ -178,22 +178,5 @@ export default class mpesa {
 }
 
 const MPESA = new mpesa()
+export { MPESA }
 
-const client: c2b = {
-    input_Amount: '346',
-    input_Country: '',
-    input_Currency: '',
-    input_CustomerMSISDN: '000000000001',
-    input_PurchasedItemsDesc: 'Donation',
-    input_ServiceProviderCode: '000000',
-    input_ThirdPartyConversationID: '1e9b774d1da34af78412a498cbc28f5e',
-    input_TransactionReference: 'T12344C',
-    path: '',
-    app: 'sandbox'
-}
-
-
-
-setInterval(async () => {
-   console.log(await MPESA.c2b(client))
-}, 10000)
