@@ -22,14 +22,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MPESA = void 0;
 const path_1 = __importDefault(require("path"));
 const connect = __importStar(require("child_process"));
 const axios_1 = __importDefault(require("axios"));
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
-const host = 'https://openapi.m-pesa.com/sandbox';
+const host = 'https://openapi.m-pesa.com';
 const country = 'TZN';
 const currency = 'TZS';
+const market = 'ipg/v2/vodacomTZN';
+const transact = {
+    c2b: market + '/c2bPayment/singleStage/',
+    b2c: market + '/b2cPayment/',
+    b2b: market + '/b2bPayment/',
+    reversal: market + '/reversal/',
+    status: market + '/queryTransactionStatus/',
+    session: market + '/getSession/'
+};
 class mpesa {
     // private key encrption 
     encrypt(privateKey) {
@@ -57,7 +67,7 @@ class mpesa {
                 const key = await this.encrypt(process.env.API_KEY);
                 const options = {
                     body: '',
-                    path: '/ipg/v2/vodacomTZN/getSession/',
+                    path: `${host}/${client.app}/${transact.session}`,
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -75,7 +85,7 @@ class mpesa {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                Authorization: 'Bearer ' + encrptedSession,
+                                Authorization: `Bearer ${encrptedSession}`,
                                 Origin: '*'
                             }
                         };
@@ -103,15 +113,18 @@ class mpesa {
     async sendRequest(options) {
         try {
             if (options.method === 'GET') {
-                const response = await axios_1.default.get(host + options.path, { headers: options.headers });
+                const response = await axios_1.default.get(options.path, { headers: options.headers });
                 if (response.data.output_ResponseCode === 'INS-0')
                     return response.data.output_SessionID;
                 else
                     return false;
             }
             else {
-                const response = await axios_1.default.post(options.path, { body: JSON.stringify(options.body), headers: options.headers });
-                console.log(response.data);
+                const response = await axios_1.default.post(options.path, JSON.stringify(options.body), { headers: options.headers });
+                if (response.data.output_ResponseCode === 'INS-0')
+                    return response.data;
+                else
+                    return false;
             }
         }
         catch (error) {
@@ -121,6 +134,9 @@ class mpesa {
     }
     async c2b(client) {
         try {
+            client.input_Country = country;
+            client.input_Currency = currency;
+            client.path = `${host}/${client.app}/${transact.c2b}`;
             const response = await this.createSession(client);
             if (response)
                 return response;
@@ -133,20 +149,5 @@ class mpesa {
         }
     }
 }
-exports.default = mpesa;
-const Mpesa = new mpesa();
-const client = {
-    input_Amount: 3000,
-    input_Country: country,
-    input_Currency: currency,
-    input_CustomerMSISDN: '000000000001',
-    input_PurchasedItemsDesc: 'Donation',
-    input_ServiceProviderCode: '000000',
-    input_ThirdPartyConversationID: '1e9b774d1da34af78412a498cbc28f5e',
-    input_TransactionReference: 'T12344C',
-    path: host + '/ipg/v2/vodacomTZN/c2bPayment/singleStage/'
-};
-Mpesa.c2b(client);
-// setInterval(async () => {
-//     console.log(await Mpesa.createSession())
-// }, 10000)
+const MPESA = new mpesa();
+exports.MPESA = MPESA;
