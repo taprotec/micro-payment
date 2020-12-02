@@ -8,7 +8,7 @@ NodeJS version >= 10
 
 **NOTE: App can be either sandbox for development environment or openapi for production (live) enviroment.**
 
-###### MPESA Customer to Business Transaction (C2B)
+### MPESA Customer to Business Transaction (C2B)
 ```
 const client: c2b = {
     input_Amount: '0000',
