@@ -119,5 +119,37 @@ setTimeout(async () => {
 4. **Sample b2b failure response**
 `returns false` and `log` the `error message` on the `console`
  
+### Reverse Successfull Transaction
+1. **Sample reverse request object**
+```
+const client = {
+    input_ReversalAmount: '25',
+    input_ServiceProviderCode: '000000',
+    input_ThirdPartyConversationID: 'asv02e5958774f7ba228d83d0d689762',
+    input_TransactionID: '0000000000001',
+    app: 'sandbox'
+}
+```
+2. **Sample reverse request**
+```
+setTimeout(async () => {
+   console.log(await MPESA.reverse(client))
+}, 1000)
+```
+3. **Sample reverse success response object**
+```
+{
+  output_ResponseCode: 'INS-0',
+  output_ResponseDesc: 'Request processed successfully',
+  output_TransactionID: 'OATXGi21bMhg',
+  output_ConversationID: '66cbb65bd72a493baed79235f77af4b9',
+  output_ThirdPartyConversationID: 'asv02e5958774f7ba228d83d0d689762'      
+}
+```
+
+4. **Sample reverse failure response**
+`returns false` and `log` the `error message` on the `console`
+ 
+
 
 

@@ -1,15 +1,13 @@
 const {MPESA} = require('./dist')
 
 const client = {
-    input_Amount: '100',
-    input_PrimaryPartyCode: '000000',
-    input_ReceiverPartyCode: '000001',
-    input_PurchasedItemsDesc: 'Shoes',
-    input_ThirdPartyConversationID: '1e9b774d1da34af78412a498cbc28f5e',
-    input_TransactionReference: 'T12344C',
+    input_ReversalAmount: '25',
+    input_ServiceProviderCode: '000000',
+    input_ThirdPartyConversationID: 'asv02e5958774f7ba228d83d0d689762',
+    input_TransactionID: '0000000000001',
     app: 'sandbox'
 }
 
 setTimeout(async() => {
-    console.log(await MPESA.b2b(client))
+    console.log(await MPESA.reverse(client))
 })

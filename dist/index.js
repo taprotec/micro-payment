@@ -131,7 +131,7 @@ var mpesa = /** @class */ (function () {
                         options_1 = {
                             body: client,
                             path: client.path,
-                            method: 'POST',
+                            method: client.type === 'reversal' ? 'PUT' : client.type === 'c2b' || client.type === 'b2c' || client.type === 'b2b' ? 'POST' : 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
                                 Authorization: "Bearer " + encrptedSession,
@@ -164,11 +164,11 @@ var mpesa = /** @class */ (function () {
     // request sending
     mpesa.prototype.sendRequest = function (options) {
         return __awaiter(this, void 0, void 0, function () {
-            var response, response, error_2;
+            var response, response, response, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 5, , 6]);
+                        _a.trys.push([0, 7, , 8]);
                         if (!(options.method === 'GET')) return [3 /*break*/, 2];
                         return [4 /*yield*/, axios_1.default.get(options.path, { headers: options.headers })];
                     case 1:
@@ -177,21 +177,33 @@ var mpesa = /** @class */ (function () {
                             return [2 /*return*/, response.data.output_SessionID];
                         else
                             return [2 /*return*/, false];
-                        return [3 /*break*/, 4];
-                    case 2: return [4 /*yield*/, axios_1.default.post(options.path, JSON.stringify(options.body), { headers: options.headers })];
+                        return [3 /*break*/, 6];
+                    case 2:
+                        if (!(options.method === 'POST')) return [3 /*break*/, 4];
+                        return [4 /*yield*/, axios_1.default.post(options.path, JSON.stringify(options.body), { headers: options.headers })];
                     case 3:
                         response = _a.sent();
                         if (response.data.output_ResponseCode === 'INS-0')
                             return [2 /*return*/, response.data];
                         else
                             return [2 /*return*/, false];
-                        _a.label = 4;
-                    case 4: return [3 /*break*/, 6];
+                        return [3 /*break*/, 6];
+                    case 4:
+                        if (!(options.method === 'PUT')) return [3 /*break*/, 6];
+                        return [4 /*yield*/, axios_1.default.put(options.path, JSON.stringify(options.body), { headers: options.headers })];
                     case 5:
+                        response = _a.sent();
+                        if (response.data.output_ResponseCode === 'INS-0')
+                            return [2 /*return*/, response.data];
+                        else
+                            return [2 /*return*/, false];
+                        _a.label = 6;
+                    case 6: return [3 /*break*/, 8];
+                    case 7:
                         error_2 = _a.sent();
                         console.error(error_2.message);
                         return [2 /*return*/, false];
-                    case 6: return [2 /*return*/];
+                    case 8: return [2 /*return*/];
                 }
             });
         });
@@ -203,6 +215,7 @@ var mpesa = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
+                        client.type = 'c2b';
                         client.input_Country = country;
                         client.input_Currency = currency;
                         client.path = host + "/" + client.app + "/" + transact.c2b;
@@ -230,6 +243,7 @@ var mpesa = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
+                        client.type = 'b2c';
                         client.input_Country = country;
                         client.input_Currency = currency;
                         client.path = host + "/" + client.app + "/" + transact.b2c;
@@ -257,6 +271,7 @@ var mpesa = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
+                        client.type = 'b2b';
                         client.input_Country = country;
                         client.input_Currency = currency;
                         client.path = host + "/" + client.app + "/" + transact.b2b;
@@ -271,6 +286,33 @@ var mpesa = /** @class */ (function () {
                     case 2:
                         error_5 = _a.sent();
                         console.error(error_5.message);
+                        return [2 /*return*/, false];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    mpesa.prototype.reverse = function (client) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, error_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        client.type = 'reversal';
+                        client.input_Country = country;
+                        client.path = host + "/" + client.app + "/" + transact.reversal;
+                        return [4 /*yield*/, this.createSession(client)];
+                    case 1:
+                        response = _a.sent();
+                        if (response)
+                            return [2 /*return*/, response];
+                        else
+                            return [2 /*return*/, false];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_6 = _a.sent();
+                        console.error(error_6.message);
                         return [2 /*return*/, false];
                     case 3: return [2 /*return*/];
                 }

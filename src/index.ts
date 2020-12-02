@@ -52,7 +52,8 @@ interface c2b {
     input_ThirdPartyConversationID: string,
     input_PurchasedItemsDesc: string,
     path: string,
-    app: string
+    app: string,
+    type: string
 }
 
 interface b2c {
@@ -65,7 +66,8 @@ interface b2c {
     input_ThirdPartyConversationID: string,
     input_PaymentItemsDesc: string,
     path: string,
-    app: string
+    app: string,
+    type: string
 }
 
 interface b2b {
@@ -78,7 +80,19 @@ interface b2b {
     input_ThirdPartyConversationID: string,
     input_PurchasedItemsDesc: string,
     path: string,
-    app: string 
+    app: string,
+    type: string 
+}
+
+interface reversal {
+    input_Country: string,
+    input_ReversalAmount: string,
+    input_ServiceProviderCode: string,
+    input_ThirdPartyConversationID: string,
+    input_TransactionID: string,
+    path: string,
+    app: string,
+    type: string 
 }
 
 class mpesa {
@@ -129,7 +143,7 @@ class mpesa {
                         const options: client = {
                             body: client,
                             path: client.path,
-                            method: 'POST',
+                            method: client.type === 'reversal' ? 'PUT' : client.type === 'c2b' || client.type === 'b2c' || client.type === 'b2b' ? 'POST' : 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
                                 Authorization: `Bearer ${encrptedSession}`,
@@ -168,8 +182,16 @@ class mpesa {
                 else
                     return false
             }
-            else {
+            else if (options.method === 'POST') {
                 const response: any = await axios.post(options.path, JSON.stringify(options.body), { headers: options.headers })
+
+                if (response.data.output_ResponseCode === 'INS-0')
+                    return response.data
+                else
+                    return false
+            }
+            else if (options.method === 'PUT') {
+                const response: any = await axios.put(options.path, JSON.stringify(options.body), { headers: options.headers })
 
                 if (response.data.output_ResponseCode === 'INS-0')
                     return response.data
@@ -185,7 +207,7 @@ class mpesa {
 
     public async c2b(client: c2b) {
         try {
-
+            client.type = 'c2b'
             client.input_Country = country
             client.input_Currency = currency
             client.path = `${host}/${client.app}/${transact.c2b}`
@@ -206,6 +228,7 @@ class mpesa {
     public async b2c(client: b2c) {
         try {
 
+            client.type = 'b2c'
             client.input_Country = country
             client.input_Currency = currency
             client.path = `${host}/${client.app}/${transact.b2c}`
@@ -223,12 +246,33 @@ class mpesa {
         }
     }
 
-    public async b2b(client: b2c) {
+    public async b2b(client: b2b) {
         try {
 
+            client.type = 'b2b'
             client.input_Country = country
             client.input_Currency = currency
             client.path = `${host}/${client.app}/${transact.b2b}`
+
+            const response: any = await this.createSession(client)
+
+            if (response)
+                return response
+            else
+                return false
+
+        } catch (error) {
+            console.error(error.message)
+            return false
+        }
+    }
+
+    public async reverse(client: reversal) {
+        try {
+
+            client.type = 'reversal'
+            client.input_Country = country
+            client.path = `${host}/${client.app}/${transact.reversal}`
 
             const response: any = await this.createSession(client)
 
