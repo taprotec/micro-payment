@@ -6,7 +6,7 @@ run pip install pycrypto
 
 NodeJS version >= 10
 
-MPESA Customer to business (C2B)
+###### MPESA Customer to Business Transaction (C2B)
 ```
 const client: c2b = {
     input_Amount: '0000',
@@ -19,7 +19,7 @@ const client: c2b = {
 }
 
 setTimeout(async () => {
-   console.log(await MPESA.c2b(client))
+   **console.log(await MPESA.c2b(client))**
 }, 1000)
 
 ```
