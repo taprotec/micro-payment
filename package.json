@@ -1,7 +1,7 @@
 {
   "name": "mpesa-micro-payment",
   "version": "1.0.0",
-  "description": "M-PESA microservices payment #nodejs #typescript #python #javascript",
+  "description": "M-PESA microservices payment #nodejs #typescript #python #javascript #micropyment",
   "main": "index.js",
   "scripts": {
     "start": "nodemon dist/index.js",
@@ -10,7 +10,9 @@
   },
   "keywords": [
     "mpesa",
-    "mpesa-api javascript-mpesa"
+    "mpesa-api",
+    "javascript-mpesa",
+    "micro-payment"
   ],
   "author": "taprotec",
   "license": "ISC",

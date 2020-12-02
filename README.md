@@ -12,11 +12,19 @@
 ##### NOTE
 ###### Don't forget to add app type on every transaction, app can be either sandbox for development environment or openapi for production (live) enviroment.
 
+### Usage
+`const { MPESA } = require('micro-payment')`
+1. `MPESA.c2b()`
+2. `MPESA.b2c()`
+3. `MPESA.b2b()`
+4. `MPESA.status()`
+5. `MPESA.reverse()`
+
 ### MPESA Customer to Business Transaction (C2B)
 1. **Sample c2b request object**
 ```
 const client = {
-    input_Amount: '0000',
+    input_Amount: '1000',
     input_CustomerMSISDN: '000000000001',
     input_PurchasedItemsDesc: 'Donation',
     input_ServiceProviderCode: '000000',

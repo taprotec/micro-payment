@@ -31,6 +31,17 @@ interface transact {
     session: string
 }
 
+
+
+const transact: transact = {
+    c2b: `${market}/c2bPayment/singleStage/`,
+    b2c: `${market}/b2cPayment/`,
+    b2b: `${market}/b2bPayment/`,
+    reversal: `${market}/reversal/`,
+    status: `${market}/queryTransactionStatus/`,
+    session: `${market}/getSession/`
+}
+
 interface c2b {
     input_Amount: string,
     input_CustomerMSISDN: string,
@@ -44,19 +55,10 @@ interface c2b {
     app: string
 }
 
-const transact: transact = {
-    c2b: market + '/c2bPayment/singleStage/',
-    b2c: market + '/b2cPayment/',
-    b2b: market + '/b2bPayment/',
-    reversal: market + '/reversal/',
-    status: market + '/queryTransactionStatus/',
-    session: market + '/getSession/'
-}
-
 class mpesa {
 
     // private key encrption 
-    protected encrypt(privateKey: any) {
+    private encrypt(privateKey: any) {
         try {
 
             let publicKey: any = process.env.PUBLIC_KEY
@@ -77,7 +79,7 @@ class mpesa {
     }
 
     // create session 
-    protected async createSession(client: any) {
+    private async createSession(client: any) {
         try {
             if (process.env.API_KEY) {
                 const key: string = await this.encrypt(process.env.API_KEY)
@@ -130,7 +132,7 @@ class mpesa {
     }
 
     // request sending
-    protected async sendRequest(options: client) {
+    private async sendRequest(options: client) {
         try {
 
             if (options.method === 'GET') {
@@ -157,7 +159,7 @@ class mpesa {
 
     async c2b(client: c2b) {
         try {
-            
+
             client.input_Country = country
             client.input_Currency = currency
             client.path = `${host}/${client.app}/${transact.c2b}`
