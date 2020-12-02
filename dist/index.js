@@ -250,6 +250,33 @@ var mpesa = /** @class */ (function () {
             });
         });
     };
+    mpesa.prototype.b2b = function (client) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, error_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        client.input_Country = country;
+                        client.input_Currency = currency;
+                        client.path = host + "/" + client.app + "/" + transact.b2b;
+                        return [4 /*yield*/, this.createSession(client)];
+                    case 1:
+                        response = _a.sent();
+                        if (response)
+                            return [2 /*return*/, response];
+                        else
+                            return [2 /*return*/, false];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_5 = _a.sent();
+                        console.error(error_5.message);
+                        return [2 /*return*/, false];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return mpesa;
 }());
 var MPESA = new mpesa();

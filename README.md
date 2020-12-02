@@ -90,3 +90,39 @@ setTimeout(async () => {
  
 **Business to customer transaction `return` a `promise`, so you have to `await` to get the results.** 
 
+### Business to Business Transaction (B2B)
+1. **Sample b2b request object**
+```
+const client = {
+    input_Amount: '100',
+    input_PrimaryPartyCode: '000000',
+    input_ReceiverPartyCode: '000001',
+    input_PurchasedItemsDesc: 'Shoes',
+    input_ThirdPartyConversationID: '1e9b774d1da34af78412a498cbc28f5e',
+    input_TransactionReference: 'T12344C',
+    app: 'sandbox'
+}
+```
+2. **Sample b2b request**
+```
+setTimeout(async () => {
+   console.log(await MPESA.b2b(client))
+}, 1000)
+```
+3. **Sample b2b success response object**
+```
+{
+  output_ResponseCode: 'INS-0',
+  output_ResponseDesc: 'Request processed successfully',
+  output_TransactionID: '1RDHPRu6Su1H',
+  output_ConversationID: '09f5de8d76b541288b5291f84e993bc8',
+  output_ThirdPartyConversationID: '1e9b774d1da34af78412a498cbc28f5e'      
+}
+```
+
+4. **Sample b2b failure response**
+`returns false` and `log` the `error message` on the `console`
+ 
+**Business to business transaction `return` a `promise`, so you have to `await` to get the results.** 
+
+
