@@ -43,5 +43,6 @@ setTimeout(async () => {
 ```
 
 4. **Sample c2b failure response**
-`returns false` and `log` the `error message` on the `console` 
+`returns false` and `log` the `error message` on the `console`
+ 
 **Customer to business transaction return a promise, so you have to await to get the results.** 
