@@ -55,6 +55,19 @@ interface c2b {
     app: string
 }
 
+interface b2c {
+    input_Amount: string,
+    input_CustomerMSISDN: string,
+    input_Country: string,
+    input_Currency: string,
+    input_ServiceProviderCode: string,
+    input_TransactionReference: string,
+    input_ThirdPartyConversationID: string,
+    input_PaymentItemsDesc: string,
+    path: string,
+    app: string
+}
+
 class mpesa {
 
     // private key encrption 
@@ -157,12 +170,32 @@ class mpesa {
         }
     }
 
-    async c2b(client: c2b) {
+    public async c2b(client: c2b) {
         try {
 
             client.input_Country = country
             client.input_Currency = currency
             client.path = `${host}/${client.app}/${transact.c2b}`
+
+            const response: any = await this.createSession(client)
+
+            if (response)
+                return response
+            else
+                return false
+
+        } catch (error) {
+            console.error(error.message)
+            return false
+        }
+    }
+
+    public async b2c(client: b2c) {
+        try {
+
+            client.input_Country = country
+            client.input_Currency = currency
+            client.path = `${host}/${client.app}/${transact.b2c}`
 
             const response: any = await this.createSession(client)
 

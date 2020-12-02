@@ -42,11 +42,11 @@ setTimeout(async () => {
 3. **Sample c2b success response object**
 ```
 {
-  "output_ResponseCode": "INS-0",
-  "output_ResponseDesc": "Request processed successfully",
-  "output_TransactionID": "yzsRm4j8C2SK",
-  "output_ConversationID": "c0b077ab74574342abdb50a71d7b5117",
-  "output_ThirdPartyConversationID": "1e9b774d1da34af78412a498cbc28f5e"
+  output_ResponseCode: 'INS-0',
+  output_ResponseDesc: 'Request processed successfully',
+  output_TransactionID: '2ACKKiGq2r0g',
+  output_ConversationID: 'bc31410c6f4b49c1ba5e1f569415a8cb',
+  output_ThirdPartyConversationID: '1e9b774d1da34af78412a498cbc28f5e'      
 }
 ```
 
@@ -54,3 +54,39 @@ setTimeout(async () => {
 `returns false` and `log` the `error message` on the `console`
  
 **Customer to business transaction return a promise, so you have to await to get the results.** 
+
+### MPESA Business to Customer Transaction (B2C)
+1. **Sample b2c request object**
+```
+const client = {
+    input_Amount: '1000',
+    input_CustomerMSISDN: '000000000001',
+    input_PaymentItemsDesc: 'Salary payment',
+    input_ServiceProviderCode: '000000',
+    input_ThirdPartyConversationID: '1e9b774d1da34af78412a498cbc28f5e',
+    input_TransactionReference: 'T12344C',
+    app: 'sandbox'
+}
+```
+2. **Sample b2c request**
+```
+setTimeout(async () => {
+   console.log(await MPESA.b2c(client))
+}, 1000)
+```
+3. **Sample b2c success response object**
+```
+{
+    output_ResponseCode: 'INS-0',
+    output_ResponseDesc: 'Request processed successfully',
+    output_TransactionID: '3Clqxpxmy94Y',
+    output_ConversationID: '55b5c84a08774320a80c3943518ab442',
+    output_ThirdPartyConversationID: '1e9b774d1da34af78412a498cbc28f5e'      
+  }
+```
+
+4. **Sample b2c failure response**
+`returns false` and `log` the `error message` on the `console`
+ 
+**Business to customer transaction return a promise, so you have to await to get the results.** 
+

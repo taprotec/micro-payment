@@ -11,5 +11,5 @@ const client = {
 }
 
 setTimeout(async() => {
-    console.log(await MPESA.createSession('adasdasdsa'))
+    console.log(await MPESA.c2b(client))
 })
