@@ -14,6 +14,9 @@
 
 ###### All transactions runs asynchronus and returns promise so you've to await to get results.
 
+### Installation
+`npm install micro-payment` ['visit']()
+
 ### Usage
 `const { MPESA } = require('micro-payment')`
 1. `MPESA.c2b()`
