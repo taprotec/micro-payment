@@ -183,12 +183,12 @@ setTimeout(async () => {
 `returns false` and `log` the `error message` on the `console`
  
 ### MPESA API Features
-[x]\() Customer to Business (C2B)
-[x]\() Business to Customer (B2C)
-[x]\() Business to Business (B2B)
-[x]\() Transaction Status
-[x]\() Reversal
-[ ]\() Direct Debit Create
-[ ]\() Direct Debit Payment
+[x]\ Customer to Business (C2B)
+[x]\ Business to Customer (B2C)
+[x]\ Business to Business (B2B)
+[x]\ Transaction Status
+[x]\ Reversal
+[ ]\ Direct Debit Create
+[ ]\ Direct Debit Payment
 
 
