@@ -31,8 +31,6 @@ interface transact {
     session: string
 }
 
-
-
 const transact: transact = {
     c2b: `${market}/c2bPayment/singleStage/`,
     b2c: `${market}/b2cPayment/`,
@@ -106,11 +104,8 @@ interface status {
 }
 
 class mpesa {
-
-    // private key encrption 
     private encrypt(privateKey: any) {
         try {
-
             let publicKey: any = process.env.PUBLIC_KEY
             if (privateKey && publicKey) {
                 const connection: any = connect.spawnSync('python', [path.join(__dirname, '../python/index.py'), privateKey, publicKey])
@@ -121,14 +116,11 @@ class mpesa {
             }
             else
                 return false
-
         } catch (error) {
             console.error(error.message)
             return false
         }
     }
-
-    // create session 
     private async createSession(client: any) {
         try {
             if (process.env.API_KEY) {
@@ -143,12 +135,9 @@ class mpesa {
                         Origin: '*'
                     }
                 }
-
                 const session: string = await this.sendRequest(options)
-
                 if (session) {
                     const encrptedSession: string = await this.encrypt(session)
-
                     if (encrptedSession) {
                         const options: client = {
                             body: client,
@@ -161,7 +150,6 @@ class mpesa {
                             }
                         }
                         const transaction: any = await this.sendRequest(options)
-
                         if (transaction)
                             return transaction
                         else
@@ -174,17 +162,13 @@ class mpesa {
             }
             else
                 return false
-
         } catch (error) {
             console.error(error.message)
             return false
         }
     }
-
-    // request sending
     private async sendRequest(options: client) {
         try {
-
             if (options.method === 'GET') {
                 const response: any = await axios.get(options.path, { headers: options.headers })
                 if (response.data.output_ResponseCode === 'INS-0')
@@ -194,7 +178,6 @@ class mpesa {
             }
             else if (options.method === 'POST') {
                 const response: any = await axios.post(options.path, JSON.stringify(options.body), { headers: options.headers })
-
                 if (response.data.output_ResponseCode === 'INS-0')
                     return response.data
                 else
@@ -215,116 +198,90 @@ class mpesa {
                 else
                     return false
             }
-
         } catch (error) {
             console.error(error.message)
             return false
         }
     }
-
     public async c2b(client: c2b) {
         try {
             client.type = 'c2b'
             client.input_Country = country
             client.input_Currency = currency
             client.path = `${host}/${client.app}/${transact.c2b}`
-
             const response: any = await this.createSession(client)
-
             if (response)
                 return response
             else
                 return false
-
         } catch (error) {
             console.error(error.message)
             return false
         }
     }
-
     public async b2c(client: b2c) {
         try {
-
             client.type = 'b2c'
             client.input_Country = country
             client.input_Currency = currency
             client.path = `${host}/${client.app}/${transact.b2c}`
-
             const response: any = await this.createSession(client)
-
             if (response)
                 return response
             else
                 return false
-
         } catch (error) {
             console.error(error.message)
             return false
         }
     }
-
     public async b2b(client: b2b) {
         try {
-
             client.type = 'b2b'
             client.input_Country = country
             client.input_Currency = currency
             client.path = `${host}/${client.app}/${transact.b2b}`
-
             const response: any = await this.createSession(client)
-
             if (response)
                 return response
             else
                 return false
-
         } catch (error) {
             console.error(error.message)
             return false
         }
     }
-
     public async reverse(client: reversal) {
         try {
-
             client.type = 'reversal'
             client.input_Country = country
             client.path = `${host}/${client.app}/${transact.reversal}`
-
             const response: any = await this.createSession(client)
-
             if (response)
                 return response
             else
                 return false
-
         } catch (error) {
             console.error(error.message)
             return false
         }
     }
-
     public async status(client: status) {
         try {
-
             client.type = 'status'
             client.input_Country = country
             client.path = `${host}/${client.app}/${transact.status}?input_QueryReference=${client.input_QueryReference}&input_ServiceProviderCode=${client.input_ServiceProviderCode}&input_ThirdPartyConversationID=${client.input_ThirdPartyConversationID}&input_Country=${client.input_Country}`
             const response: any = await this.createSession(client)
-
             if (response)
                 return response
             else
                 return false
-
         } catch (error) {
             console.error(error.message)
             return false
         }
     }
-
 }
-
 const MPESA = new mpesa()
 export { MPESA }
 

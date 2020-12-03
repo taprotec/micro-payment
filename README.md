@@ -12,6 +12,8 @@
 ##### NOTE
 ###### Don't forget to add app type on every transaction, app can be either sandbox for development environment or openapi for production (live) enviroment.
 
+###### All transactions runs async and return s promise so you've to await to get results.
+
 ### Usage
 `const { MPESA } = require('micro-payment')`
 1. `MPESA.c2b()`
@@ -180,6 +182,13 @@ setTimeout(async () => {
 4. **Sample reverse failure response**
 `returns false` and `log` the `error message` on the `console`
  
-
+### MPESA API Features
+[x] Customer to Business (C2B)
+[x] Business to Customer (B2C)
+[x] Business to Business (B2B)
+[x] Transaction Status
+[x] Reversal
+[ ] Direct Debit Create
+[ ] Direct Debit Payment
 
 

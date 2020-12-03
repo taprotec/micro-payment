@@ -79,7 +79,6 @@ var transact = {
 var mpesa = /** @class */ (function () {
     function mpesa() {
     }
-    // private key encrption 
     mpesa.prototype.encrypt = function (privateKey) {
         try {
             var publicKey = process.env.PUBLIC_KEY;
@@ -98,7 +97,6 @@ var mpesa = /** @class */ (function () {
             return false;
         }
     };
-    // create session 
     mpesa.prototype.createSession = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var key, options, session, encrptedSession, options_1, transaction, error_1;
@@ -161,7 +159,6 @@ var mpesa = /** @class */ (function () {
             });
         });
     };
-    // request sending
     mpesa.prototype.sendRequest = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             var response, response, response, response, error_2;
