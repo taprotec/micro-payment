@@ -1,6 +1,6 @@
 {
-  "name": "mpesa-micro-payment",
-  "version": "1.0.0",
+  "name": "micro-payment",
+  "version": "0.0.1",
   "description": "M-PESA microservices payment #nodejs #typescript #python #javascript #micropyment",
   "main": "index.js",
   "scripts": {
