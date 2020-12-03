@@ -81,7 +81,7 @@ interface b2b {
     input_PurchasedItemsDesc: string,
     path: string,
     app: string,
-    type: string 
+    type: string
 }
 
 interface reversal {
@@ -92,7 +92,7 @@ interface reversal {
     input_TransactionID: string,
     path: string,
     app: string,
-    type: string 
+    type: string
 }
 
 interface status {
@@ -102,7 +102,7 @@ interface status {
     input_ThirdPartyConversationID: string,
     path: string,
     app: string,
-    type: string 
+    type: string
 }
 
 class mpesa {
@@ -208,12 +208,12 @@ class mpesa {
                 else
                     return false
             } else {
-                const response: any = await axios.get(options.path,{ headers: options.headers })
+                const response: any = await axios.get(options.path, { headers: options.headers })
 
                 if (response.data.output_ResponseCode === 'INS-0')
                     return response.data
                 else
-                return false
+                    return false
             }
 
         } catch (error) {
@@ -310,7 +310,6 @@ class mpesa {
             client.type = 'status'
             client.input_Country = country
             client.path = `${host}/${client.app}/${transact.status}?input_QueryReference=${client.input_QueryReference}&input_ServiceProviderCode=${client.input_ServiceProviderCode}&input_ThirdPartyConversationID=${client.input_ThirdPartyConversationID}&input_Country=${client.input_Country}`
-            console.log(client.path)
             const response: any = await this.createSession(client)
 
             if (response)

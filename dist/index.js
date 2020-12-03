@@ -337,7 +337,6 @@ var mpesa = /** @class */ (function () {
                         client.type = 'status';
                         client.input_Country = country;
                         client.path = host + "/" + client.app + "/" + transact.status + "?input_QueryReference=" + client.input_QueryReference + "&input_ServiceProviderCode=" + client.input_ServiceProviderCode + "&input_ThirdPartyConversationID=" + client.input_ThirdPartyConversationID + "&input_Country=" + client.input_Country;
-                        console.log(client.path);
                         return [4 /*yield*/, this.createSession(client)];
                     case 1:
                         response = _a.sent();
