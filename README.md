@@ -25,6 +25,13 @@
 4. `MPESA.status()`
 5. `MPESA.reverse()`
 
+##### NOTE 
+Add your `API_KEY` and `PUBLIC_KEY` on enviroment variables `.env` file before processing any transaction.
+```
+API_KEY = YOUR API KEY
+PUBLIC_KEY = YOUR PUBLIC KEY
+```
+
 ### Customer to Business Transaction (C2B)
 1. **Sample c2b request object**
 ```
