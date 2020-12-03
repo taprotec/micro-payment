@@ -131,7 +131,7 @@ var mpesa = /** @class */ (function () {
                         options_1 = {
                             body: client,
                             path: client.path,
-                            method: client.type === 'reversal' ? 'PUT' : client.type === 'c2b' || client.type === 'b2c' || client.type === 'b2b' ? 'POST' : 'GET',
+                            method: client.type === 'reversal' ? 'PUT' : client.type === 'c2b' || client.type === 'b2c' || client.type === 'b2b' ? 'POST' : 'GET2',
                             headers: {
                                 'Content-Type': 'application/json',
                                 Authorization: "Bearer " + encrptedSession,
@@ -164,11 +164,11 @@ var mpesa = /** @class */ (function () {
     // request sending
     mpesa.prototype.sendRequest = function (options) {
         return __awaiter(this, void 0, void 0, function () {
-            var response, response, response, error_2;
+            var response, response, response, response, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 7, , 8]);
+                        _a.trys.push([0, 9, , 10]);
                         if (!(options.method === 'GET')) return [3 /*break*/, 2];
                         return [4 /*yield*/, axios_1.default.get(options.path, { headers: options.headers })];
                     case 1:
@@ -177,7 +177,7 @@ var mpesa = /** @class */ (function () {
                             return [2 /*return*/, response.data.output_SessionID];
                         else
                             return [2 /*return*/, false];
-                        return [3 /*break*/, 6];
+                        return [3 /*break*/, 8];
                     case 2:
                         if (!(options.method === 'POST')) return [3 /*break*/, 4];
                         return [4 /*yield*/, axios_1.default.post(options.path, JSON.stringify(options.body), { headers: options.headers })];
@@ -187,7 +187,7 @@ var mpesa = /** @class */ (function () {
                             return [2 /*return*/, response.data];
                         else
                             return [2 /*return*/, false];
-                        return [3 /*break*/, 6];
+                        return [3 /*break*/, 8];
                     case 4:
                         if (!(options.method === 'PUT')) return [3 /*break*/, 6];
                         return [4 /*yield*/, axios_1.default.put(options.path, JSON.stringify(options.body), { headers: options.headers })];
@@ -197,13 +197,21 @@ var mpesa = /** @class */ (function () {
                             return [2 /*return*/, response.data];
                         else
                             return [2 /*return*/, false];
-                        _a.label = 6;
-                    case 6: return [3 /*break*/, 8];
+                        return [3 /*break*/, 8];
+                    case 6: return [4 /*yield*/, axios_1.default.get(options.path, { headers: options.headers })];
                     case 7:
+                        response = _a.sent();
+                        if (response.data.output_ResponseCode === 'INS-0')
+                            return [2 /*return*/, response.data];
+                        else
+                            return [2 /*return*/, false];
+                        _a.label = 8;
+                    case 8: return [3 /*break*/, 10];
+                    case 9:
                         error_2 = _a.sent();
                         console.error(error_2.message);
                         return [2 /*return*/, false];
-                    case 8: return [2 /*return*/];
+                    case 10: return [2 /*return*/];
                 }
             });
         });
@@ -313,6 +321,34 @@ var mpesa = /** @class */ (function () {
                     case 2:
                         error_6 = _a.sent();
                         console.error(error_6.message);
+                        return [2 /*return*/, false];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    mpesa.prototype.status = function (client) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, error_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        client.type = 'status';
+                        client.input_Country = country;
+                        client.path = host + "/" + client.app + "/" + transact.status + "?input_QueryReference=" + client.input_QueryReference + "&input_ServiceProviderCode=" + client.input_ServiceProviderCode + "&input_ThirdPartyConversationID=" + client.input_ThirdPartyConversationID + "&input_Country=" + client.input_Country;
+                        console.log(client.path);
+                        return [4 /*yield*/, this.createSession(client)];
+                    case 1:
+                        response = _a.sent();
+                        if (response)
+                            return [2 /*return*/, response];
+                        else
+                            return [2 /*return*/, false];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_7 = _a.sent();
+                        console.error(error_7.message);
                         return [2 /*return*/, false];
                     case 3: return [2 /*return*/];
                 }

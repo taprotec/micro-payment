@@ -118,7 +118,37 @@ setTimeout(async () => {
 
 4. **Sample b2b failure response**
 `returns false` and `log` the `error message` on the `console`
- 
+
+### Transaction Status
+1. **Sample status request object**
+```
+const client = {
+    input_QueryReference: '000000000000000000001',
+    input_ServiceProviderCode: '000000',
+    input_ThirdPartyConversationID: 'asv02e5958774f7ba228d83d0d689761',
+    app: 'sandbox'
+}
+```
+2. **Sample status request**
+```
+setTimeout(async () => {
+   console.log(await MPESA.status(client))
+}, 1000)
+```
+3. **Sample status success response object**
+```
+{
+  output_ResponseCode: 'INS-0',
+  output_ResponseDesc: 'Request processed successfully',
+  output_ResponseTransactionStatus: 'Completed',  
+  output_ConversationID: '4cb66a7c16b44e01831d942f13f398bc',
+  output_ThirdPartyConversationID: 'asv02e5958774f7ba228d83d0d689761'      
+}
+```
+
+4. **Sample status failure response**
+`returns false` and `log` the `error message` on the `console`
+
 ### Reverse Successfull Transaction
 1. **Sample reverse request object**
 ```

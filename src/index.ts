@@ -95,6 +95,16 @@ interface reversal {
     type: string 
 }
 
+interface status {
+    input_QueryReference: string,
+    input_Country: string,
+    input_ServiceProviderCode: string,
+    input_ThirdPartyConversationID: string,
+    path: string,
+    app: string,
+    type: string 
+}
+
 class mpesa {
 
     // private key encrption 
@@ -143,7 +153,7 @@ class mpesa {
                         const options: client = {
                             body: client,
                             path: client.path,
-                            method: client.type === 'reversal' ? 'PUT' : client.type === 'c2b' || client.type === 'b2c' || client.type === 'b2b' ? 'POST' : 'GET',
+                            method: client.type === 'reversal' ? 'PUT' : client.type === 'c2b' || client.type === 'b2c' || client.type === 'b2b' ? 'POST' : 'GET2',
                             headers: {
                                 'Content-Type': 'application/json',
                                 Authorization: `Bearer ${encrptedSession}`,
@@ -197,6 +207,13 @@ class mpesa {
                     return response.data
                 else
                     return false
+            } else {
+                const response: any = await axios.get(options.path,{ headers: options.headers })
+
+                if (response.data.output_ResponseCode === 'INS-0')
+                    return response.data
+                else
+                return false
             }
 
         } catch (error) {
@@ -274,6 +291,26 @@ class mpesa {
             client.input_Country = country
             client.path = `${host}/${client.app}/${transact.reversal}`
 
+            const response: any = await this.createSession(client)
+
+            if (response)
+                return response
+            else
+                return false
+
+        } catch (error) {
+            console.error(error.message)
+            return false
+        }
+    }
+
+    public async status(client: status) {
+        try {
+
+            client.type = 'status'
+            client.input_Country = country
+            client.path = `${host}/${client.app}/${transact.status}?input_QueryReference=${client.input_QueryReference}&input_ServiceProviderCode=${client.input_ServiceProviderCode}&input_ThirdPartyConversationID=${client.input_ThirdPartyConversationID}&input_Country=${client.input_Country}`
+            console.log(client.path)
             const response: any = await this.createSession(client)
 
             if (response)
