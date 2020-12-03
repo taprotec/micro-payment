@@ -10,7 +10,7 @@
 
 
 ##### NOTE
-###### Don't forget to add app type on every transaction, app can be either sandbox for development environment or openapi for production (live) enviroment.
+###### For MPESA API's don't forget to add app type on every transaction request object, app can be either sandbox for development environment or openapi for production (live) enviroment.
 
 ###### All transactions runs asynchronus and returns promise so you've to await to get results.
 
