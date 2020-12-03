@@ -1,5 +1,5 @@
 {
-  "name": "micro-payment",
+  "name": " micro-payment",
   "version": "0.0.1",
   "description": "M-PESA microservices payment #nodejs #typescript #python #javascript #micropyment",
   "main": "index.js",
